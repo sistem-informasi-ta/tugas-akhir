@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Middleware;
 
 use Closure;
@@ -10,25 +11,15 @@ class UserAdmin
 {
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::check()) {
-            $user = Auth::user();
-            $route = $request->route()->getName();
-
-            // Admin tidak boleh ke route 'home'
-            if ($user->role === 'admin' && $route === 'home') {
-                return redirect()->route('admin.dashboard');
-            }
-
-            // User tidak boleh ke route 'admin.dashboard'
-            if ($user->role === 'user' && $route === 'admin.dashboard') {
-                return redirect()->route('home');
-            }
+        if (!Auth::check()) {
+            return redirect('/'); // Belum login
         }
 
-        // Prevent cache-back
-        $response = $next($request);
-        return $response->header('Cache-Control', 'no-cache, no-store, max-age=0, must-revalidate')
-                        ->header('Pragma', 'no-cache')
-                        ->header('Expires', 'Sat, 01 Jan 1990 00:00:00 GMT');
+        // Jika role bukan admin atau user, redirect
+        if (!in_array(Auth::user()->role, ['admin', 'user'])) {
+            abort(403, 'Unauthorized');
+        }
+
+        return $next($request);
     }
 }

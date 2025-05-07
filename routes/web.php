@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\OrderController;
 use App\Http\Middleware\UserAdmin;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -35,5 +36,6 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::middleware(['auth', UserAdmin::class])->group(function () {
     Route::get('/home', fn() => view('user.home-user'))->name('home');
     Route::get('/admin-dashboard', fn() => view('admin.admin-dashboard'))->name('admin.dashboard');
+    Route::get('/admin-orders',[OrderController::class, 'index'])->name('admin.orders');
 });
 
