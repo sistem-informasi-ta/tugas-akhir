@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Homestay Putih Mulia</title>
@@ -50,7 +51,6 @@
             <h1 class="display-4 fw-bold">Book Your Perfect Stay</h1>
             <p class="lead">Discover affordable hotels with the best deals!</p>
             <div class="search-box mt-4">
-                {{-- <form action="{{ route('search') }}" method="GET"> --}}
                     <div class="row g-3 align-items-center justify-content-center">
                         <div class="col-md-4">
                             <input type="text" class="form-control" placeholder="Find your favorite room" name="destination">
@@ -197,7 +197,6 @@
                         <span class="divider-text">Atau daftar dengan Email</span>
                     </div>
                     <!-- Register Form -->
-                    {{-- <form action="{{ route('register') }}" method="POST"> --}}
                         @csrf
                         <div class="mb-3">
                             <label for="registerName" class="form-label">Nama</label>
@@ -231,10 +230,10 @@
     <script src="{{ asset('js/main.js') }}"></script>
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     @if ($errors->has('login_error'))
-<script>
-    var myModal = new bootstrap.Modal(document.getElementById('authModal'));
-    myModal.show();
-</script>
-@endif
+        <script>
+            var myModal = new bootstrap.Modal(document.getElementById('authModal'));
+            myModal.show();
+        </script>
+    @endif
 </body>
 </html>
